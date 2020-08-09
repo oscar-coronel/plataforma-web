@@ -1,6 +1,5 @@
 //const use = require('./network')
 const storage = require('./storage')
-const { response } = require('express')
 
 function addMessage(user, message) {
     return new Promise(function (resolve, reject) {
@@ -13,11 +12,8 @@ function addMessage(user, message) {
                 message: message,
                 date: new Date()
             }
-
-            storage.add(fullMessage)
-
-            return resolve(fullMessage)
-
+            const result = storage.add(fullMessage)
+            return resolve(result)
         }
     })
 }

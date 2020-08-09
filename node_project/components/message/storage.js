@@ -14,9 +14,10 @@ db.connect(uri, {
     console.error('[db] Problemas con la conexión')
 })
 
-function addMessage(message) {
+async function addMessage(message) {
     const myMessage = new Model(message)
-    myMessage.save()
+    const newMessage = await myMessage.save()
+    return newMessage
 }
 
 async function getMessages(filterUser) {
