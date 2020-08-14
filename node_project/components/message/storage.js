@@ -1,18 +1,6 @@
-const db = require('mongoose')
+
 const Model = require('./model')
 
-const uri = 'mongodb+srv://ocoronel:lGPH5WgGxY4BvZ5s@cluster0.0sp2y.gcp.mongodb.net/ups?retryWrites=true&w=majority'
-
-db.Promise = global.Promise
-db.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    //dbName: 'ups'
-}).then(() => {
-    console.log('[db] Conexión Exitosa')
-}).catch(() => {
-    console.error('[db] Problemas con la conexión')
-})
 
 async function addMessage(message) {
     const myMessage = new Model(message)
@@ -37,8 +25,15 @@ async function updateMessage(id, message) {
     return newMessage
 }
 
+function deleteMessage(id) {
+    return Model.deleteOne({
+        _id: id
+    })
+}
+
 module.exports = {
     add: addMessage,
     list: getMessages,
     update: updateMessage,
+    delete: deleteMessage,
 }

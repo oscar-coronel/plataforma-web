@@ -34,8 +34,19 @@ function updateMessage(id, message) {
     })
 }
 
+function deleteMessage(id) {
+    return new Promise(async (resolve, reject) => {
+        if (!id) {
+            return reject('Id Inválida')
+        }
+        const result = storage.delete(id)
+        return resolve(result)
+    })
+}
+
 module.exports = {
     addMessage,
     getMessages,
     updateMessage,
+    deleteMessage,
 }

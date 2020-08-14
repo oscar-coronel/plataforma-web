@@ -33,6 +33,14 @@ router.patch('/:id', function (req, res) {
     })
 })
 
+router.delete('/:id', function (req, res) {
+    controller.deleteMessage(req.params.id).then(result => {
+        response.success(req, res, result, 200)
+    }).catch(error => {
+        response.error(req, res, 'Error interno', 500, 'Detalle de error')
+    })
+})
+
 router.delete('/', function (req, res) {
     response.success(req, res, 'Hola Delete')
 })
