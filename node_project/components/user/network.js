@@ -24,4 +24,20 @@ router.post('/', function (req, res) {
 
 })
 
+router.patch('/:id', function (req, res) {
+    controller.updateUser(req.params.id, req.body.name, req.body.lastname).then(result => {
+        response.success(req, res, result, 200)
+    }).catch(error => {
+        response.error(req, res, 'Error interno', 500, 'Detalle de error')
+    })
+})
+
+router.delete('/:id', function (req, res) {
+    controller.deleteUser(req.params.id).then(result => {
+        response.success(req, res, result, 200)
+    }).catch(error => {
+        response.error(req, res, 'Error interno', 500, 'Detalle de error')
+    })
+})
+
 module.exports = router

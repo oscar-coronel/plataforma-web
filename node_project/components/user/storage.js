@@ -18,7 +18,23 @@ async function getUsers(filterName) {
     return await Model.find(filter)
 }
 
+async function updateUser(id, name, lastname) {
+    const oUser = await Model.findOne({ _id: id })
+    oUser.name = name
+    oUser.lastname = lastname
+    const newUser = oUser.save()
+    return newUser
+}
+
+function deleteUser(id) {
+    return Model.deleteOne({
+        _id: id
+    })
+}
+
 module.exports = {
     add: addUser,
     list: getUsers,
+    update: updateUser,
+    delete: deleteUser,
 }

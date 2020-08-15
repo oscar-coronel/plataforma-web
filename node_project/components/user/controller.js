@@ -23,8 +23,30 @@ function getUsers(filter_name) {
     })
 }
 
+function updateUser(id, name, lastname) {
+    return new Promise(async (resolve, reject) => {
+        if (!id || !name || !lastname) {
+            return reject('Data Inválida')
+        }
+        const result = await storage.update(id, name, lastname)
+        return resolve(result)
+    })
+}
+
+function deleteUser(id) {
+    return new Promise(async (resolve, reject) => {
+        if (!id) {
+            return reject('Id Inválida')
+        }
+        const result = storage.delete(id)
+        return resolve(result)
+    })
+}
+
 
 module.exports = {
     addUser,
     getUsers,
+    updateUser,
+    deleteUser,
 }
