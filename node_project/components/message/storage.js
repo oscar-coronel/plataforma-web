@@ -1,5 +1,5 @@
-
 const Model = require('./model')
+const UserModel = require('../user/model')
 
 
 async function addMessage(message) {
@@ -8,14 +8,39 @@ async function addMessage(message) {
     return newMessage
 }
 
-async function getMessages(filterUser) {
-    let filter = {}
-    if (filterUser != null) {
-        filter = {
-            user: filterUser
-        }
-    }
-    return await Model.find(filter)
+function getMessages(filterUser) {
+    return new Promise((resolve, reject) => {
+        if (filterUser != null) {
+            let filter = {
+                name: filterUser
+            }
+            UserModel.find(filter).then(function(userData){
+                if (userData.length == 0) {
+                    return resolve([])
+                }
+                Model.find({user: userData[0]._id})
+                .populate('user')
+                .exec((error, populated) => {
+                    if (error) {
+                        return reject( error )
+                    }
+                    return resolve(populated)
+                })
+            })
+            
+        } else {
+            Model.find()
+            .populate('user')
+            .exec((error, populated) => {
+                if (error) {
+                    return reject( error )
+                }
+                return resolve(populated)
+            })
+        }   
+        
+    })
+
 }
 
 async function updateMessage(id, message) {

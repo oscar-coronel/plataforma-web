@@ -34,8 +34,16 @@
                     <div class="col-12 mb-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <h1 class="text-center mb-0">Mensajes</h1>
+                            <div class="d-inline-block w-25">
+                                <div class="input-group">
+                                    <input type="text" name="search_user" id="search_user" class="form-control" placeholder="Nombre de Usuario">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-info" onclick="getMessages();">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#message-modal">
-                                Crear
+                                Enviar Mensaje
                             </button>
                         </div>
                     </div>
@@ -62,7 +70,7 @@
                     <form method="POST" id="message_form">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="message-modal-title">Crear Mensaje</h5>
+                                <h5 class="modal-title" id="message-modal-title">Mensaje</h5>
                                 <button class="close" data-dismiss="modal" aria-label="Close" id="modal-close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -70,7 +78,8 @@
                             <div class="modal-body">
                                 <div class="form-group form-row">
                                     <label for="user">Usuario:</label>
-                                    <input type="text" name="user" id="user" class="form-control" placeholder="Usuario" required />
+                                    <select name="user" id="user" class="form-control">
+                                    </select>
                                 </div>
                                 <div class="form-group form-row">
                                     <label for="message">Mensaje</label>
@@ -79,7 +88,7 @@
                             </div>
                             <div class="modal-footer d-flex justify-content-between align-items-center">
                                 <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary" id="send_message">Enviar</button>
                             </div>
                         </div>
                     </form>
