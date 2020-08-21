@@ -1,16 +1,25 @@
 //const use = require('./network')
 const storage = require('./storage')
+const config = require('../../config')
 
-function addMessage(user, message) {
+function addMessage(chat, user, message, file) {
     return new Promise(function (resolve, reject) {
-        if (!user || !message) {
+        if (!chat || !user || !message) {
             console.log('[Message Controller] No hay usuario o mensaje')
             return reject('Los datos son incorrectos')
         } else {
+
+            let fileUrl = ''
+            if (file) {
+                fileUrl = config.host + ':' + config.port + config.publicRoute + config.filesRoute + '/' + file.filename
+            }
+
             const fullMessage = {
+                chat: chat,
                 user: user,
                 message: message,
-                date: new Date()
+                date: new Date(),
+                file: fileUrl
             }
             const result = storage.add(fullMessage)
             return resolve(result)
