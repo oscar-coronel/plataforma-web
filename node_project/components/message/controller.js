@@ -1,6 +1,7 @@
 //const use = require('./network')
 const storage = require('./storage')
 const config = require('../../config')
+const socket = require('../../socket').socket
 
 function addMessage(chat, user, message, file) {
     return new Promise(function (resolve, reject) {
@@ -22,6 +23,7 @@ function addMessage(chat, user, message, file) {
                 file: fileUrl
             }
             const result = storage.add(fullMessage)
+            socket.io.emit('message', fullMessage)
             return resolve(result)
         }
     })
