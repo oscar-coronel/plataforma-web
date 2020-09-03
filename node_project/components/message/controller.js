@@ -3,27 +3,27 @@ const storage = require('./storage')
 const config = require('../../config')
 const socket = require('../../socket').socket
 
-function addMessage(chat, user, message, file) {
+function addMessage(origin_user_id, destiny_user_id, message, file) {
     return new Promise(function (resolve, reject) {
-        if (!chat || !user || !message) {
+        if (!origin_user_id || !destiny_user_id || !message) {
             console.log('[Message Controller] No hay usuario o mensaje')
             return reject('Los datos son incorrectos')
         } else {
 
             let fileUrl = ''
             if (file) {
-                fileUrl = config.host + ':' + config.port + config.publicRoute + config.filesRoute + '/' + file.filename
+                fileUrl = config.filesRoute + '/' + file.filename
             }
 
             const fullMessage = {
-                chat: chat,
-                user: user,
+                origin_user_id: origin_user_id,
+                destiny_user_id: destiny_user_id,
                 message: message,
                 date: new Date(),
                 file: fileUrl
             }
             const result = storage.add(fullMessage)
-            socket.io.emit('message', fullMessage)
+            //socket.io.emit('message', fullMessage)
             return resolve(result)
         }
     })
@@ -36,21 +36,27 @@ function getMessages(filter_user) {
 }
 
 function updateMessage(id, message) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         if (!id || !message) {
             return reject('Data Inválida')
         }
-        const result = await storage.update(id, message)
+        const data = {
+            message: message,
+        }
+        const result = storage.update(id, data)
         return resolve(result)
     })
 }
 
 function deleteMessage(id) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         if (!id) {
             return reject('Id Inválida')
         }
-        const result = storage.delete(id)
+        const filters = {
+            id: id
+        }
+        const result = storage.delete(filters)
         return resolve(result)
     })
 }

@@ -52,8 +52,10 @@
                             <table id="messages_table" class="table table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Usuario</th>
+                                        <th>Usuario Origen</th>
+                                        <th>Usuario Destino</th>
                                         <th>Mensaje</th>
+                                        <th>Archivo</th>
                                         <th>Fecha</th>
                                     </tr>
                                 </thead>
@@ -67,7 +69,7 @@
 
             <div id="message-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="message-modal-title" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <form method="POST" id="message_form">
+                    <form method="POST" id="message_form" enctype="multipart/form-data">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="message-modal-title">Mensaje</h5>
@@ -77,13 +79,22 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group form-row">
-                                    <label for="user">Usuario:</label>
-                                    <select name="user" id="user" class="form-control">
+                                    <label for="origin_user_id">Usuario Origen:</label>
+                                    <select name="origin_user_id" id="origin_user_id" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="form-group form-row">
+                                    <label for="destiny_user_id">Usuario Destino:</label>
+                                    <select name="destiny_user_id" id="destiny_user_id" class="form-control">
                                     </select>
                                 </div>
                                 <div class="form-group form-row">
                                     <label for="message">Mensaje</label>
                                     <textarea name="message" id="message" cols="30" rows="4" class="form-control" placeholder="Mensaje" required></textarea>
+                                </div>
+                                <div class="form-group form-row">
+                                    <label for="destiny_user_id">Archivo:</label>
+                                    <input type="file" name="file" id="file" class="form-control" />
                                 </div>
                             </div>
                             <div class="modal-footer d-flex justify-content-between align-items-center">

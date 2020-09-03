@@ -3,7 +3,10 @@ const bodyParser = require('body-parser')
 
 const config = require('./config')
 const db = require('./db')
+global.pool = require('./pg-db')
 const routes = require('./network/routes')
+
+const model = require('./models/model')
 
 var app = express()
 
@@ -33,3 +36,5 @@ server.listen(config.port, function(){
 })
 
 console.log('Server ready on port '+config.port)
+
+//

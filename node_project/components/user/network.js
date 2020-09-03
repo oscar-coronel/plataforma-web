@@ -5,7 +5,6 @@ const controller = require('./controller')
 const router = express.Router()
 
 router.get('/', function (req, res) {
-
     const filterUser = req.query.name || null
     controller.getUsers(filterUser).then(usersList => {
         response.success(req, res, usersList, 200)

@@ -22,7 +22,7 @@ const upload = multer({storage: storage})
 
 router.get('/', function (req, res) {
 
-    const filterMessage = req.query.user || null
+    const filterMessage = req.query.user_name || null
 
     controller.getMessages(filterMessage).then(messagesList => {
         response.success(req, res, messagesList, 200)
@@ -33,11 +33,11 @@ router.get('/', function (req, res) {
 
 router.post('/', upload.single('file'), function (req, res) {
 
-    controller.addMessage(req.body.chat, req.body.user, req.body.message, req.file)
+    controller.addMessage(req.body.origin_user_id, req.body.destiny_user_id, req.body.message, req.file)
     .then((fullMessage) => {
         response.success(req, res, fullMessage, 201)
     }).catch((error) => {
-        response.error(req, res, 'Error simulado', 500, 'Es una simulacion de los errores')
+        response.error(req, res, 'Error simulado', 500, error)
     })
 
 })

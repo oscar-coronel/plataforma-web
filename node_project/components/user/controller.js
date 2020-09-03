@@ -28,7 +28,14 @@ function updateUser(id, name, lastname) {
         if (!id || !name || !lastname) {
             return reject('Data Inválida')
         }
-        const result = await storage.update(id, name, lastname)
+        const data = {
+            name: name,
+            lastname: lastname
+        }
+        const filters = {
+            id: id
+        }
+        const result = await storage.update(id, data, filters)
         return resolve(result)
     })
 }
@@ -38,7 +45,10 @@ function deleteUser(id) {
         if (!id) {
             return reject('Id Inválida')
         }
-        const result = storage.delete(id)
+        const filters = {
+            id: id
+        }
+        const result = await storage.delete(filters)
         return resolve(result)
     })
 }

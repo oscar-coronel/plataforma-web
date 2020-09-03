@@ -1,35 +1,30 @@
+const model = require('../../models/model')
 
-const Model = require('./model')
+const table = 'users'
 
 
 async function addUser(user) {
-    const myUser = new Model(user)
-    const newUser = await myUser.save()
+    const newUser = await model.create(table, user)
     return newUser
 }
 
 async function getUsers(filterName) {
-    let filter = {}
+    let filter = null
     if (filterName != null) {
         filter = {
             name: filterName
         }
     }
-    return await Model.find(filter)
+    return await model.get(table, filter)
 }
 
-async function updateUser(id, name, lastname) {
-    const oUser = await Model.findOne({ _id: id })
-    oUser.name = name
-    oUser.lastname = lastname
-    const newUser = oUser.save()
-    return newUser
+async function updateUser(id, data, filters) {
+    const user = await model.update(table, data, filters)
+    return user
 }
 
-function deleteUser(id) {
-    return Model.deleteOne({
-        _id: id
-    })
+async function deleteUser(filters) {
+    return await model.destroy(table, filters)
 }
 
 module.exports = {
